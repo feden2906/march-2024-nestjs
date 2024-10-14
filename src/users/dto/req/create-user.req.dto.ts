@@ -1,7 +1,11 @@
-export class CreateUserReqDto {
-  readonly name: string;
-  readonly age?: number;
-  readonly email: string;
-  readonly password: string;
-  readonly role: string;
-}
+import { PickType } from '@nestjs/swagger';
+
+import { UserBaseReqDto } from './user-base.req.dto';
+
+export class CreateUserReqDto extends PickType(UserBaseReqDto, [
+  'name',
+  'age',
+  'email',
+  'password',
+  'role',
+]) {}
