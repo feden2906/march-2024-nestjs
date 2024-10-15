@@ -6,6 +6,9 @@ export class CreateUserReqDto extends PickType(UserBaseReqDto, [
   'name',
   'age',
   'email',
+  'phone',
   'password',
-  'role',
+  'isStudent',
+  'gender',
+  'cars',
 ]) {}
