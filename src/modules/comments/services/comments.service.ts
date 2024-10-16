@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { CreateCommentDto } from './dto/create-comment.dto';
+import { CreateCommentDto } from '../models/dto/req/create-comment.dto';
 
 @Injectable()
 export class CommentsService {

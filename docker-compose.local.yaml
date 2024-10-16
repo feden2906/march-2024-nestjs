@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  march-2024-postgres:
+    image: postgres:16.1
+    ports:
+      - '${POSTGRES_PORT}:5432'
+    environment:
+      POSTGRES_USER: '${POSTGRES_USER:-user}'
+      POSTGRES_PASSWORD: '${POSTGRES_PASSWORD:-password}'
+      POSTGRES_DB: '${POSTGRES_DB:-march-2024}'
+    volumes:
+      - ./march-2024-api-db:/var/lib/postgresql/march-2024
+
+  march-2024-redis:
+    image: redis:7.2.3
+    ports:
+      - '${REDIS_PORT:-6379}:6379'
+    command: >
+      --requirepass '${REDIS_PASSWORD:-redispass}'
+    restart: unless-stopped
+
+  march-2024-s3:
+    image: quay.io/minio/minio:latest
+    command: server /data --console-address ":9001"
+    restart: unless-stopped
+    ports:
+      - "8000:9000"
+      - "8001:9001"
+    volumes:
+      - ./march-2024-api-s3-data:/usr/src/app/s3
+    environment:
+      - MINIO_ROOT_USER=user            # AWS_S3_ACCESS_KEY
+      - MINIO_ROOT_PASSWORD=password    # AWS_S3_SECRET_KEY
+
+volumes:
+  march-2024-api-db:
+  march-2024-api-s3:
+

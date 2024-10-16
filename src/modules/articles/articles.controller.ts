@@ -9,9 +9,9 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-import { ArticlesService } from './articles.service';
-import { CreateArticleDto } from './dto/create-article.dto';
-import { UpdateArticleDto } from './dto/update-article.dto';
+import { CreateArticleDto } from './models/dto/req/create-article.dto';
+import { UpdateArticleDto } from './models/dto/req/update-article.dto';
+import { ArticlesService } from './services/articles.service';
 
 @ApiBearerAuth()
 @ApiTags('Articles')
