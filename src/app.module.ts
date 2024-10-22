@@ -9,6 +9,7 @@ import { CommentsModule } from './modules/comments/comments.module';
 import { LoggerModule } from './modules/logger/logger.module';
 import { PostgresModule } from './modules/postgres/postgres.module';
 import { RedisModule } from './modules/redis/redis.module';
+import { RepositoryModule } from './modules/repository/repository.module';
 import { UsersModule } from './modules/users/users.module';
 
 @Module({
@@ -18,6 +19,7 @@ import { UsersModule } from './modules/users/users.module';
       isGlobal: true,
     }),
     LoggerModule,
+    RepositoryModule,
     PostgresModule,
     RedisModule,
     ArticlesModule,
