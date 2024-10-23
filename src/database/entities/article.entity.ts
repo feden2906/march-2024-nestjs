@@ -8,6 +8,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
+import { CommentEntity } from './comment.entity';
 import { TableNameEnum } from './enums/table-name.enum';
 import { LikeEntity } from './like.entity';
 import { CreateUpdateModel } from './models/create-update.model';
@@ -30,6 +31,9 @@ export class ArticleEntity extends CreateUpdateModel {
 
   @OneToMany(() => LikeEntity, (entity) => entity.article)
   likes?: LikeEntity[];
+
+  @OneToMany(() => CommentEntity, (entity) => entity.article)
+  comments?: CommentEntity[];
 
   @Column()
   user_id: string;
