@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
+import { UserID } from '../../common/types/entity-ids.type';
 import { ArticleEntity } from './article.entity';
 import { CommentEntity } from './comment.entity';
 import { TableNameEnum } from './enums/table-name.enum';
@@ -11,7 +12,7 @@ import { RefreshTokenEntity } from './refresh-token.entity';
 @Entity(TableNameEnum.USERS)
 export class UserEntity extends CreateUpdateModel {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id: UserID;
 
   @Column('text')
   name: string;
