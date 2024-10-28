@@ -7,9 +7,11 @@ import {
   ParseUUIDPipe,
   Patch,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { UserID } from '../../common/types/entity-ids.type';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import { IUserData } from '../auth/models/interfaces/user-data.interface';
 import { UpdateUserReqDto } from './models/dto/req/update-user.req.dto';
 import { UsersService } from './services/users.service';
 
@@ -18,21 +20,29 @@ import { UsersService } from './services/users.service';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get(':id')
-  public async findOne(@Param('id', ParseUUIDPipe) id: UserID) {
-    return this.usersService.findOne(+id);
+  @ApiBearerAuth()
+  @Get('me')
+  public async findMe(@CurrentUser() userData: IUserData) {
+    return await this.usersService.findMe(userData);
   }
 
-  @Patch(':id')
-  public async update(
-    @Param('id') id: UserID,
+  @ApiBearerAuth()
+  @Patch('me')
+  public async updateMe(
+    @CurrentUser() userData: IUserData,
     @Body() updateUserDto: UpdateUserReqDto,
   ) {
-    return this.usersService.update(+id, updateUserDto);
+    return await this.usersService.updateMe(userData, updateUserDto);
   }
 
-  @Delete(':id')
-  public async remove(@Param('id') id: UserID) {
-    return this.usersService.remove(+id);
+  @ApiBearerAuth()
+  @Delete('me')
+  public async removeMe(@CurrentUser() userData: IUserData) {
+    return await this.usersService.removeMe(userData);
+  }
+
+  @Get(':userId')
+  public async findOne(@Param('userId', ParseUUIDPipe) userId: UserID) {
+    return await this.usersService.findOne(userId);
   }
 }

@@ -20,7 +20,7 @@ export class UserEntity extends CreateUpdateModel {
   @Column('text', { unique: true })
   email: string;
 
-  @Column('text')
+  @Column('text', { select: false })
   password: string;
 
   @Column('boolean', { default: true })

@@ -1,6 +1,7 @@
 import { UserID } from '../../../../common/types/entity-ids.type';
 
-export interface IJwtPayload {
-  deviceId: string;
+export interface IUserData {
   userId: UserID;
+  deviceId: string;
+  email: string;
 }
