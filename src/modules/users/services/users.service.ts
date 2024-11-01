@@ -18,7 +18,12 @@ export class UsersService {
   ) {}
 
   public async findMe(userData: IUserData) {
-    return `This action returns a #${userData.userId} user`;
+    const qb = this.userRepository.createQueryBuilder('user');
+    qb.leftJoinAndSelect('user.refreshTokens', 'refreshTokens');
+    qb.where('user.id = :userId', { userId: userData.userId });
+    const mapped = await qb.getMany();
+    const raw = await qb.getRawMany();
+    return await qb.getOne();
   }
 
   public async updateMe(userData: IUserData, dto: UpdateUserReqDto) {
