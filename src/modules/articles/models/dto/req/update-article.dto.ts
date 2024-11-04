@@ -1,5 +1,9 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { PickType } from '@nestjs/swagger';
 
-import { CreateArticleDto } from './create-article.dto';
+import { BaseArticleReqDto } from './base-article.req.dto';
 
-export class UpdateArticleDto extends PartialType(CreateArticleDto) {}
+export class UpdateArticleDto extends PickType(BaseArticleReqDto, [
+  'title',
+  'description',
+  'body',
+]) {}

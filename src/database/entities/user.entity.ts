@@ -32,6 +32,9 @@ export class UserEntity extends CreateUpdateModel {
   @Column('text', { nullable: true })
   image: string;
 
+  @Column('timestamp', { nullable: true })
+  deleted?: Date;
+
   @OneToMany(() => RefreshTokenEntity, (entity) => entity.user)
   refreshTokens?: RefreshTokenEntity[];
 
