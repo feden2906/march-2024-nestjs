@@ -4,6 +4,7 @@ import {
   JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
+  VirtualColumn,
 } from 'typeorm';
 
 import { TagID } from '../../common/types/entity-ids.type';
@@ -22,4 +23,7 @@ export class TagEntity extends CreateUpdateModel {
   @ManyToMany(() => ArticleEntity, (entity) => entity.tags)
   @JoinTable()
   articles?: ArticleEntity[];
+
+  @VirtualColumn({ query: () => 'NULL' })
+  articleCount?: number;
 }
