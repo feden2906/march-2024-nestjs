@@ -1,9 +1,13 @@
+import { ApiProperty } from '@nestjs/swagger';
+
+import { UserID } from '../../../../../common/types/entity-ids.type';
+
 export class UserBaseResDto {
-  id: string;
+  @ApiProperty({ type: String })
+  id: UserID;
   name: string;
-  age?: number;
   email: string;
-  role: string;
-  created_at: Date;
-  updated_at: Date;
+  bio?: string;
+  image?: string;
+  isFollowed?: boolean;
 }

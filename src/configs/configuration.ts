@@ -22,10 +22,20 @@ export default (): Config => ({
   aws: {
     accessKey: process.env.AWS_ACCESS_KEY,
     secretKey: process.env.AWS_SECRET_KEY,
+    bucketName: process.env.AWS_S3_BUCKET_NAME,
+    region: process.env.AWS_S3_REGION,
+    ACL: process.env.AWS_S3_ACL,
+    endpoint: process.env.AWS_S3_ENDPOINT,
   },
   sentry: {
     dsn: process.env.SENTRY_DSN,
     env: process.env.SENTRY_ENV,
     debug: process.env.SENTRY_DEBUG === 'true',
+  },
+  jwt: {
+    accessSecret: process.env.JWT_ACCESS_SECRET,
+    accessExpiresIn: parseInt(process.env.JWT_ACCESS_EXPIRES_IN, 10) || 3600,
+    refreshSecret: process.env.JWT_REFRESH_SECRET,
+    refreshExpiresIn: parseInt(process.env.JWT_REFRESH_EXPIRES_IN, 10) || 86400,
   },
 });
