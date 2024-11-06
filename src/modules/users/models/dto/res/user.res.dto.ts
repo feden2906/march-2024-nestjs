@@ -8,4 +8,5 @@ export class UserResDto extends PickType(UserBaseResDto, [
   'email',
   'bio',
   'image',
+  'isFollowed',
 ]) {}

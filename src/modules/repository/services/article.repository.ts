@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 
+import { ArticleID } from '../../../common/types/entity-ids.type';
 import { ArticleEntity } from '../../../database/entities/article.entity';
 import { ListArticleQueryDto } from '../../articles/models/dto/req/list-article-query.dto';
 import { IUserData } from '../../auth/models/interfaces/user-data.interface';
@@ -18,6 +19,12 @@ export class ArticleRepository extends Repository<ArticleEntity> {
     const qb = this.createQueryBuilder('article');
     qb.leftJoinAndSelect('article.tags', 'tag');
     qb.leftJoinAndSelect('article.user', 'user');
+    qb.leftJoinAndSelect(
+      'user.followings',
+      'following',
+      'following.follower_id = :userId',
+      { userId: userData.userId },
+    );
 
     if (query.search) {
       qb.andWhere('CONCAT(article.title, article.description) ILIKE :search');
@@ -30,5 +37,22 @@ export class ArticleRepository extends Repository<ArticleEntity> {
     qb.skip(query.offset);
 
     return await qb.getManyAndCount();
+  }
+
+  public async getById(
+    userData: IUserData,
+    articleId: ArticleID,
+  ): Promise<ArticleEntity> {
+    const qb = this.createQueryBuilder('article');
+    qb.leftJoinAndSelect('article.tags', 'tag');
+    qb.leftJoinAndSelect('article.user', 'user');
+    qb.leftJoinAndSelect(
+      'user.followings',
+      'following',
+      'following.follower_id = :userId',
+      { userId: userData.userId },
+    );
+    qb.where('article.id = :articleId', { articleId });
+    return await qb.getOne();
   }
 }

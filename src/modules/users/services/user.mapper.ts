@@ -10,7 +10,8 @@ export class UserMapper {
       name: user.name,
       email: user.email,
       bio: user.bio,
-      image: user.image,
+      image: `${process.env.AWS_S3_ENDPOINT}/${user.image}`,
+      isFollowed: user.followings?.length > 0 || false,
     };
   }
 

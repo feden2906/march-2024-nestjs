@@ -36,8 +36,11 @@ export class ArticlesService {
     return await this.articleRepository.findAll(userData, query);
   }
 
-  public async findOne(articleId: ArticleID): Promise<ArticleEntity> {
-    return {} as any;
+  public async findOne(
+    userData: IUserData,
+    articleId: ArticleID,
+  ): Promise<ArticleEntity> {
+    return await this.articleRepository.getById(userData, articleId);
   }
 
   public async update(
