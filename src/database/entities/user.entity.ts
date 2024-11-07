@@ -1,4 +1,10 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 import { UserID } from '../../common/types/entity-ids.type';
 import { ArticleEntity } from './article.entity';
@@ -9,6 +15,7 @@ import { LikeEntity } from './like.entity';
 import { CreateUpdateModel } from './models/create-update.model';
 import { RefreshTokenEntity } from './refresh-token.entity';
 
+@Index(['name'])
 @Entity(TableNameEnum.USERS)
 export class UserEntity extends CreateUpdateModel {
   @PrimaryGeneratedColumn('uuid')

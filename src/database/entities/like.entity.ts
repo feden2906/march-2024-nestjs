@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -12,6 +13,7 @@ import { ArticleEntity } from './article.entity';
 import { TableNameEnum } from './enums/table-name.enum';
 import { UserEntity } from './user.entity';
 
+@Index(['user_id', 'article_id'], { unique: true })
 @Entity(TableNameEnum.LIKES)
 export class LikeEntity {
   @PrimaryGeneratedColumn('uuid')
