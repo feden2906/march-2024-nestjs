@@ -18,6 +18,7 @@ export class ArticleRepository extends Repository<ArticleEntity> {
   ): Promise<[ArticleEntity[], number]> {
     const qb = this.createQueryBuilder('article');
     qb.leftJoinAndSelect('article.tags', 'tag');
+    // qb.leftJoinAndSelect('article.tags', 'tag', 'tag.name = :tag');
     qb.leftJoinAndSelect('article.user', 'user');
     qb.leftJoinAndSelect(
       'user.followings',
