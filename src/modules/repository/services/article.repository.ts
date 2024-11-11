@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, EntityManager, Repository } from 'typeorm';
 
 import { ArticleID } from '../../../common/types/entity-ids.type';
 import { ArticleEntity } from '../../../database/entities/article.entity';
@@ -44,8 +44,11 @@ export class ArticleRepository extends Repository<ArticleEntity> {
   public async getById(
     userData: IUserData,
     articleId: ArticleID,
+    em?: EntityManager,
   ): Promise<ArticleEntity> {
-    const qb = this.createQueryBuilder('article');
+    const repo = em ? em.getRepository(ArticleEntity) : this;
+
+    const qb = repo.createQueryBuilder('article');
     qb.leftJoinAndSelect('article.tags', 'tag');
     qb.leftJoinAndSelect('article.user', 'user');
     qb.leftJoinAndSelect(
